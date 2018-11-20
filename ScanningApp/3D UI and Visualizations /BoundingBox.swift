@@ -256,7 +256,13 @@ class BoundingBox: SCNNode {
                 let transform = dragPlaneTransform(forPlaneNormal: planeNormalRay, camera: camera)
                 
                 var offset = float3()
+                
+                /// unprojectPoint:返回点从2D视图投影到ARKit检测到的3D世界空间中的平面上。
+                /// 第一个参数：投影到平面上的2D视图空间中的点。
+                /// 第二个参数：一个变换矩阵，用于指定3D世界空间中平面（具有无限范围）的位置和方向。 平面是此变换定义的局部坐标空间的xz平面。
+                /// 返回值：从指定的2D点投射的光线与指定平面相交的世界空间中的3D点。 如果光线不与平面相交，则此方法返回nil。
                 if let hitPos = sceneView.unprojectPoint(screenPos, ontoPlane: transform) {
+                    /// simdWorldPosition：节点相对于场景世界坐标空间的位置。
                     offset = self.simdWorldPosition - hitPos
                 }
                 
