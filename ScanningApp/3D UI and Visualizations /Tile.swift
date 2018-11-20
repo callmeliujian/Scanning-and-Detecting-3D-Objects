@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 A visualization indicating when part of a scanned bounding box has enough data for recognition.
+ 可视化指示扫描的边界框的一部分何时具有足够的数据用于识别。
 */
 
 import UIKit
@@ -24,8 +25,9 @@ class Tile: SCNNode {
         self.geometry = plane
         self.opacity = 0.0
         
-        // Create a child node with another plane of the same size, but a darker color to stand out better.
-        // This helps users see captured tiles from the back.
+        // Create a child node with another plane of the same size, but a darker color to stand out better. 使用相同大小的另一个平面创建子节点，但颜色较深，以便更好地突出。
+        // This helps users see captured tiles from the back.这有助于用户从后面查看捕获的图块。
+        
         if childNodes.isEmpty {
             let innerPlane = SCNPlane(width: plane.width, height: plane.height)
             innerPlane.materials = [SCNMaterial.material(withDiffuse: UIColor.appBrown.withAlphaComponent(0.8), isDoubleSided: false)]

@@ -36,6 +36,7 @@ enum Axis {
     }
 }
 
+/// 平面拖动
 struct PlaneDrag {
     var planeTransform: float4x4
     var offset: float3

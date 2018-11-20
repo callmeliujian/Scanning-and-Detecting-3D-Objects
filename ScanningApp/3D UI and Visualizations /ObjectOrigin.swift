@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 An interactive visualization of x/y/z coordinate axes for use in placing the origin/anchor point of a scanned object.
+ x / y / z坐标轴的交互式可视化，用于放置扫描对象的原点/锚点。
 */
 
 import Foundation

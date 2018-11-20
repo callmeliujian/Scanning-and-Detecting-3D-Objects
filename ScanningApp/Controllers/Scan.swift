@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 Manages the major steps in scanning an object.
+ 管理扫描对象的主要步骤。
 */
 
 import Foundation

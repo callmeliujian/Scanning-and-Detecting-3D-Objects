@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 Visualizaitons and controls for resizing a bounding box.
+ 用于调整边界框大小的可视化和控件。
 */
 
 import Foundation

@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 An interactive visualization of a bounding box in 3D space with movement and resizing controls.
+通过移动和调整大小控件对3D空间中的边界框进行交互式可视化
 */
 
 import Foundation
@@ -16,10 +17,10 @@ class BoundingBox: SCNNode {
     static let scanPercentageUserInfoKey = "ScanPercentage"
     static let boxExtentUserInfoKey = "BoxExtent"
     
-    var extent: float3 = float3(0.1, 0.1, 0.1) {
+    var extent: float3 = float3(0.1, 0.1, 0.1) { //向量
         didSet {
             extent = max(extent, minSize)
-            updateVisualization()
+            updateVisualization() // 更新可视化
             NotificationCenter.default.post(name: BoundingBox.extentChangedNotification,
                                             object: self)
         }
@@ -39,10 +40,12 @@ class BoundingBox: SCNNode {
     
     private var minSize: Float = 0.01
     
-    private struct SideDrag {
+    private struct SideDrag { //侧面拖动
         var side: BoundingBoxSide
         var planeTransform: float4x4
+        /// 开始位置
         var beginWorldPos: float3
+        /// 移动距离
         var beginExtent: float3
     }
     
@@ -142,6 +145,7 @@ class BoundingBox: SCNNode {
         self.updateWireframe()
     }
     
+    /// 更新线框
     private func updateWireframe() {
         // When this method is called the first time, create the wireframe and add them as child node.
         guard let wireframe = self.wireframe else {
@@ -164,6 +168,7 @@ class BoundingBox: SCNNode {
         }
         
         // Otherwise just update the geometries's size and position.
+        // 更新几何体的大小和位置
         sides.forEach { $0.value.update(boundingBoxExtent: self.extent) }
     }
     
@@ -359,18 +364,20 @@ class BoundingBox: SCNNode {
         
         frameCounter += 1
 
-        // Add new hit test rays at a lower frame rate to keep the list of previous rays
-        // at a reasonable size.
+        // Add new hit test rays at a lower frame rate to keep the list of previous rays。以较低的帧速率添加新的命中测试光线以保留先前光线的列表
+        // at a reasonable size.在合理的大小
         if frameCounter % 20 == 0 {
             frameCounter = 0
             
             // Create a new hit test ray. A line segment defined by its start and end point
             // is used to hit test against bounding box tiles. The ray's length allows for
             // intersections if the user is no more than five meters away from the bounding box.
+            // 创建一个新的命中测试射线。 由其起点和终点定义的线段用于针对边界框图块进行测试。 如果用户距离边界框不超过五米，则光线的长度允许交叉。
             let currentRay = Ray(normalFrom: camera, length: 5.0)
             
             // Only remember the ray if it hit the bounding box,
             // and the hit location is significantly different from all previous hit locations.
+            // 只有在光线到达边界框时才会记住它，并且命中位置与之前的所有命中位置明显不同。
             if let (_, hitLocation) = tile(hitBy: currentRay) {
                 if isHitLocationDifferentFromPreviousRayHitTests(hitLocation) {
                     cameraRaysAndHitLocations.append((ray: currentRay, hitLocation: hitLocation))

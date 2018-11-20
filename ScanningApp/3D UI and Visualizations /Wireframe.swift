@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 A visualization of the edges of a 3D box.
+ 可视化3D框的边缘 正方体
 */
 
 import Foundation
@@ -14,6 +15,10 @@ class Wireframe: SCNNode {
     
     var isHighlighted: Bool = false {
         didSet {
+            /*
+             geometry: SCNGeometry ：可以在场景中显示的三维形状（也称为模型或网格），具有定义其外观的附加材料。
+             firstMaterial：第一种材料附着在几何体上。
+             */
             geometry?.firstMaterial?.diffuse.contents = isHighlighted ? UIColor.red : color
         }
     }
@@ -61,7 +66,7 @@ class Wireframe: SCNNode {
         }
     }
     
-    // MARK: - Shading
+    // MARK: - Shading 着色器
     
     func setupShader() {
         guard let path = Bundle.main.path(forResource: "wireframe_shader", ofType: "metal", inDirectory: "art.scnassets"),

@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 A representation of the object being scanned.
+ 正在扫描的对象的表示。
 */
 
 import Foundation
