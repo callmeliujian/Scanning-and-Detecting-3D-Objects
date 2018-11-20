@@ -244,7 +244,11 @@ class BoundingBox: SCNNode {
             if let side = result.node.parent as? BoundingBoxSide {
                 side.showXAxisExtensions()
                 side.showYAxisExtensions()
-                
+                /*
+                 normalize:返回指向所提供向量的相同方向的向量，长度为1。
+                 simdConvertVector:将方向向量从节点的本地坐标空间转换为另一个节点的方向向量。to nil d代表装换为世界坐标系
+                 算出方向，转换为单位向量。
+                 */
                 let sideNormalInWorld = normalize(self.simdConvertVector(side.dragAxis.normal, to: nil) -
                     self.simdConvertVector(float3(0), to: nil))
                 

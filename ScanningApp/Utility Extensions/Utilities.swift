@@ -256,6 +256,7 @@ func dragPlaneTransform(forPlaneNormal planeNormalRay: Ray, camera: SCNNode) -> 
     // Create a transform for a XZ-plane. This transform can be passed to unproject() to
     // map the user's touch position in screen space onto that plane in 3D space.
     // The plane's transform is constructed from a given normal.
+    // 为XZ平面创建变换。 可以将此变换传递给unproject（），以将用户在屏幕空间中的触摸位置映射到3D空间中的该平面上。平面的变换由给定法线构成。
     let yVector = normalize(planeNormalRay.direction)
     let xVector = cross(yVector, camera.simdWorldRight)
     let zVector = normalize(cross(xVector, yVector))
