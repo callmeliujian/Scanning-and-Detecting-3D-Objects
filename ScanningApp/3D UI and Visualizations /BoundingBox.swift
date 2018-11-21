@@ -145,9 +145,10 @@ class BoundingBox: SCNNode {
         self.updateWireframe()
     }
     
-    /// 更新线框
+    /// 更新线框 画立方体的线
     private func updateWireframe() {
         // When this method is called the first time, create the wireframe and add them as child node.
+        // 在第一次调用此方法时，创建线框并将其添加为子节点。
         guard let wireframe = self.wireframe else {
             let wireframe = Wireframe(extent: self.extent, color: color)
             self.addChildNode(wireframe)

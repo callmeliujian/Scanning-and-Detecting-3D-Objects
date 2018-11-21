@@ -3,6 +3,7 @@ See LICENSE folder for this sample’s licensing information.
 
 Abstract:
 A visualization of the 3D point cloud data during object scanning.
+ 在对象扫描期间可视化3D点云数据
 */
 
 import Foundation

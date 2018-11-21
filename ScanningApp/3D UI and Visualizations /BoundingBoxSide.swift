@@ -95,7 +95,10 @@ class BoundingBoxSide: SCNNode {
     
     private func setup(boundingBoxExtent extent: float3) {
         self.size = size(from: extent)
-        
+        /*
+         simdLocalTranslate:更改节点相对于其当前位置的位置。
+         simdLocalRotate:更改节点相对于其当前方向的方向。参数：要在节点局部空间中应用的轴和旋转角度，表示为四元数。
+        */
         switch face {
         case .front:
             simdLocalTranslate(by: float3(0, 0, extent.z / 2))
@@ -117,6 +120,7 @@ class BoundingBoxSide: SCNNode {
         }
         
         setupExtensions()
+        
     }
     
     func update(boundingBoxExtent extent: float3) {
@@ -196,6 +200,7 @@ class BoundingBoxSide: SCNNode {
     }
     
     // MARK: - Line-based dragging visualization
+    // 点击m某个平面的时候出现的虚线
     
     func setupExtensions() {
         for index in 0...11 {
@@ -203,6 +208,7 @@ class BoundingBoxSide: SCNNode {
             line.geometry = cylinder(width: lineThickness, height: extensionLength)
             if index < 4 {
                 xAxisExtLines.append(line)
+                print("xAxisExtLines -------  \(xAxisExtLines.count)")
                 line.simdLocalRotate(by: simd_quatf(angle: -.pi / 2, axis: .z))
                 if index == 2 || index == 3 {
                     line.simdLocalRotate(by: simd_quatf(angle: .pi, axis: .x))
