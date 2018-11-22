@@ -89,9 +89,11 @@ class ScannedObject: SCNNode {
         }
     }
     
+    // 适配点状云
     func fitOverPointCloud(_ pointCloud: ARPointCloud) {
         // Do the automatic adjustment of the bounding box only if the user
         // hasn't adjusted it yet.
+        // 仅在用户尚未调整边界框时才自动调整边界框。
         guard let boundingBox = self.boundingBox, !boundingBox.hasBeenAdjustedByUser else { return }
         
         let hitTestResults = sceneView.hitTest(ViewController.instance!.screenCenter, types: .featurePoint)

@@ -78,6 +78,7 @@ class ScannedPointCloud: SCNNode, PointCloud {
     func update(with pointCloud: ARPointCloud, localFor boundingBox: BoundingBox) {
         // Convert the points to world coordinates because we display them
         // in world coordinates.
+        // 将点转换为世界坐标，因为我们以世界坐标显示它们。
         var pointsInWorld: [float3] = []
         for point in pointCloud.points {
             pointsInWorld.append(boundingBox.simdConvertPosition(point, to: nil))

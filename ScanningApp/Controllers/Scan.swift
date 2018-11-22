@@ -321,14 +321,23 @@ class Scan {
     
     func updateOnEveryFrame(_ frame: ARFrame) {
         if state == .ready || state == .defineBoundingBox {
+            //rawFeaturePoints：特征点
+            /*
+             这些点表示在相机图像中检测到的显着特征。 它们在3D世界坐标空间中的位置被推断为ARKit为了精确跟踪设备的位置，方向和移动而执行的图像分析的一部分。 总之，考虑到相机，这些点与真实世界物体的轮廓松散相关。
+             ARKit不保证原始特征点的数量和排列在软件版本之间，甚至在同一会话中的后续帧之间保持稳定。 无论如何， point cloud 在调试应用程序将虚拟对象放置到真实世界场景时有时会证明是有用的。
+             如果使用ARSCNView类使用SceneKit显示AR内容，则可以使用ARSCNDebugOptionShowFeaturePoints调试选项显示此 point cloud 。
+             特征点检测需要ARWorldTrackingConfiguration会话。
+            */
             if let points = frame.rawFeaturePoints {
                 // Automatically adjust the size of the bounding box.
+                // 自动调整边界框的大小。
                 self.scannedObject.fitOverPointCloud(points)
             }
         }
         
         if state == .ready || state == .defineBoundingBox || state == .scanning {
-            
+            // lightEstimate：表示场景中光线的光估计。
+            // ambientIntensity：照明的环境强度。
             if let lightEstimate = frame.lightEstimate, lightEstimate.ambientIntensity < 500, !hasWarnedAboutLowLight, isFirstScan {
                 hasWarnedAboutLowLight = true
                 let title = "Too dark for scanning"
@@ -338,12 +347,14 @@ class Scan {
             
             // Try a preliminary creation of the reference object based off the current
             // bounding box & update the point cloud visualization based on that.
+            // 尝试基于当前边界框初步创建参考对象，并基于此更新点云可视化。
             if let boundingBox = scannedObject.eitherBoundingBox {
                 // Note: Create a new preliminary reference object in regular intervals.
                 //       Creating the reference object is asynchronous and likely
                 //       takes some time to complete. Avoid calling it again before
                 //       enough time has passed and while we still wait for the
                 //       previous call to complete.
+                // 定期创建一个新的初步引用对象。创建引用对象是异步的，可能需要一些时间才能完成。 在足够的时间过去之前避免再次调用它，同时我们仍然等待上一次调用完成。
                 let now = CACurrentMediaTime()
                 if now - timeOfLastReferenceObjectCreation > Scan.objectCreationInterval, !isBusyCreatingReferenceObject {
                     timeOfLastReferenceObjectCreation = now
@@ -353,6 +364,7 @@ class Scan {
                                                             extent: boundingBox.extent) { object, error in
                         if let referenceObject = object {
                             // Pass the feature points to the point cloud visualization.
+                            // 将要素点传递给点云可视化。
                             self.pointCloud.update(with: referenceObject.rawFeaturePoints, localFor: boundingBox)
                         }
                         self.isBusyCreatingReferenceObject = false
@@ -360,6 +372,7 @@ class Scan {
                 }
                 
                 // Update the point cloud with the current frame's points as well
+                // 使用当前帧的点更新点云
                 if let currentPoints = frame.rawFeaturePoints {
                     pointCloud.update(with: currentPoints)
                 }
@@ -367,6 +380,7 @@ class Scan {
         }
         
         // Update bounding box side coloring to visualize scanning coverage
+        // 更新边界框侧面着色以可视化扫描覆盖范围
         if state == .scanning {
             scannedObject.boundingBox?.highlightCurrentTile()
             scannedObject.boundingBox?.updateCapturingProgress()

@@ -103,6 +103,7 @@ class BoundingBox: SCNNode {
         for point in pointCloud.points {
             if let focus = focusPoint {
                 // Skip this point if it is more than maxDistanceToFocusPoint meters away from the focus point.
+                // 如果距离焦点点多于maxDistanceToFocusPoint米，请跳过此点。
                 let distanceToFocusPoint = length(point - focus)
                 if distanceToFocusPoint > maxDistanceToFocusPoint {
                     continue
@@ -110,6 +111,7 @@ class BoundingBox: SCNNode {
             }
             
             // Skip this point if it is an outlier (not at least 3 other points closer than 3 cm)
+            // 如果它是一个异常值（至少3个其他点不超过3厘米），请略过这一点
             var nearbyPoints = 0
             for otherPoint in pointCloud.points {
                 if distance(point, otherPoint) < 0.03 {
@@ -129,6 +131,7 @@ class BoundingBox: SCNNode {
         
         for point in filteredPoints {
             // The bounding box is in local coordinates, so convert point to local, too.
+            // 边界框位于本地坐标中，因此也将点转换为本地。
             let localPoint = self.simdConvertPosition(point, from: nil)
             
             localMin = min(localMin, localPoint)
@@ -136,6 +139,7 @@ class BoundingBox: SCNNode {
         }
         
         // Update the position & extent of the bounding box based on the new min & max values.
+        // 根据新的最小值和最大值更新边界框的位置和范围。
         self.simdPosition += (localMax + localMin) / 2
         self.extent = localMax - localMin
     }
