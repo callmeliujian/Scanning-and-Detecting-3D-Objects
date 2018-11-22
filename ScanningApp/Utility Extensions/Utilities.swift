@@ -112,6 +112,7 @@ extension ARSCNView {
     }
     
     func smartHitTest(_ point: CGPoint) -> ARHitTestResult? {
+        /// hitTest:找到与相机图像中的某个点所对应的真实世界面
         let hitTestResults = hitTest(point, types: .featurePoint)
         guard !hitTestResults.isEmpty else { return nil }
         

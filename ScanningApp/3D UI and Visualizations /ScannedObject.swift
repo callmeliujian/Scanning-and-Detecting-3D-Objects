@@ -140,6 +140,7 @@ class ScannedObject: SCNNode {
     
     private func updateOrCreateGhostBoundingBox() {
         // Perform a hit test against the feature point cloud.
+        /// 针对特征点云执行命中测试
         guard let result = sceneView.smartHitTest(ViewController.instance!.screenCenter) else {
             if let ghostBoundingBox = ghostBoundingBox {
                 ghostBoundingBox.removeFromParentNode()
@@ -153,6 +154,7 @@ class ScannedObject: SCNNode {
         
         // Set the position of scanned object to a point on the ray which is offset
         // from the hit test result by half of the bounding boxes' extent.
+        // 将扫描对象的位置设置为光线上的点，该点与命中测试结果相差一半的边界框范围。
         let cameraToHit = result.worldTransform.position - sceneView.pointOfView!.simdWorldPosition
         let normalizedDirection = normalize(cameraToHit)
         let boundingBoxOffset = normalizedDirection * newExtent / 2
