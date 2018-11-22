@@ -445,8 +445,9 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         guard let frame = sceneView.session.currentFrame else { return }
+        sceneView.debugOptions = [.showFeaturePoints]
         scan?.updateOnEveryFrame(frame)
-        testRun?.updateOnEveryFrame()
+        //testRun?.updateOnEveryFrame()
     }
     
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
@@ -566,7 +567,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
         let yString = String(format: "height: %.2f", box.extent.y)
         let zString = String(format: "length: %.2f", box.extent.z)
         let distanceFromCamera = String(format: "%.2f m", distance(box.simdWorldPosition, cameraPos))
-        displayMessage("Current bounding box: \(distanceFromCamera) away\n\(xString) \(yString) \(zString)", expirationTime: 1.5)
+        displayMessage("Current bounding box: \(distanceFromCamera) away\n\(xString) \(yString) \(zString)", expirationTime: 15000)
     }
     
     @objc

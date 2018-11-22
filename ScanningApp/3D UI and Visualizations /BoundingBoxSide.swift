@@ -208,7 +208,7 @@ class BoundingBoxSide: SCNNode {
             line.geometry = cylinder(width: lineThickness, height: extensionLength)
             if index < 4 {
                 xAxisExtLines.append(line)
-                print("xAxisExtLines -------  \(xAxisExtLines.count)")
+                //print("xAxisExtLines -------  \(xAxisExtLines.count)")
                 line.simdLocalRotate(by: simd_quatf(angle: -.pi / 2, axis: .z))
                 if index == 2 || index == 3 {
                     line.simdLocalRotate(by: simd_quatf(angle: .pi, axis: .x))
