@@ -445,6 +445,7 @@ class ViewController: UIViewController, ARSCNViewDelegate, ARSessionDelegate, UI
     
     func renderer(_ renderer: SCNSceneRenderer, updateAtTime time: TimeInterval) {
         guard let frame = sceneView.session.currentFrame else { return }
+        // debug模式
         sceneView.debugOptions = [.showFeaturePoints]
         scan?.updateOnEveryFrame(frame)
         //testRun?.updateOnEveryFrame()
