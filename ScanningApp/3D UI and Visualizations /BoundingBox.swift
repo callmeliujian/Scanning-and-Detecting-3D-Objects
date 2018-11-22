@@ -156,6 +156,8 @@ class BoundingBox: SCNNode {
             return
         }
         
+        print(self.extent)
+        
         // Otherwise just update the wireframe's size and position.
         wireframe.update(extent: self.extent)
     }
