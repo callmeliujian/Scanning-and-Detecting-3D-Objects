@@ -493,10 +493,14 @@ class BoundingBox: SCNNode {
     func updateOnEveryFrame() {
         if let frame = sceneView.session.currentFrame {
             // Check if the bounding box should align its bottom with a nearby plane.
+            // 检查边界框是否应将其底部与附近的平面对齐。
             tryToAlignWithPlanes(frame.anchors)
         }
         
-        sides.forEach { $0.value.updateVisualizationIfNeeded() }
+        sides.forEach {
+            $0.value.updateVisualizationIfNeeded()
+            
+        }
     }
     
     func tryToAlignWithPlanes(_ anchors: [ARAnchor]) {

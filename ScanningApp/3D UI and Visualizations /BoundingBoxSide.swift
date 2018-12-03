@@ -170,12 +170,21 @@ class BoundingBoxSide: SCNNode {
         isBusyUpdatingTiles = true
         
         // Determine number of rows and colums
+        // 确定行数和列数
+        // ceil:向上取整 ceil（2） = 2.0 ceil(2.1) = ceil(2.5) = ceil(2.99) = 3.0
         let numRows = min(self.maxTileCount, Int(ceil(self.size.height / self.maxTileSize)))
         let numColumns = min(self.maxTileCount, Int(ceil(self.size.width / self.maxTileSize)))
+        print("maxTileCount------------\(self.maxTileCount)")
+        
+        print("numRows---\(numRows)")
+        print(self.size.height)
+        print("numColumns---\(numColumns)")
+        print(self.size.width)
         
         var newTiles = [Tile]()
         
         // Create updated tiles and lay them out
+        // 创建更新的图块并将其布局
         for row in 0..<numRows {
             for col in 0..<numColumns {
                 let plane = SCNPlane(width: self.size.width / CGFloat(numColumns), height: self.size.height / CGFloat(numRows))
@@ -183,14 +192,19 @@ class BoundingBoxSide: SCNNode {
 
                 let xPos = -self.size.width / 2 + plane.width / 2 + CGFloat(col) * plane.width
                 let yPos = self.size.height / 2 - plane.height / 2 - CGFloat(row) * plane.height
-                
+
                 let tileNode = Tile(plane)
                 tileNode.simdPosition = float3(Float(xPos), Float(yPos), 0)
                 newTiles.append(tileNode)
             }
         }
         
+//        let plane = SCNPlane(width: self.size.width, height: self.size.height);
+//        let tileNode = Tile(plane)
+//        newTiles.append(tileNode)
+        
         // Replace the nodes in the scene graph.
+        // 替换场景图中的节点。
         self.tiles.forEach { $0.removeFromParentNode() }
         newTiles.forEach { self.addChildNode($0) }
         self.tiles = newTiles
